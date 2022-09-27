@@ -1,16 +1,19 @@
-import Express, { application, Request, Response }  from "express";
+import Express,{json}  from "express";
+import { routes } from "./routes";
+import './database/associations'
+import {db} from './database/db'
 
 const App = Express();
 
-App.get('/', (req: Request, res: Response)=>{
-    res.send("<h1>Servidor rodando</h1>")
-});
 
-App.get('/secret', (req: Request, res: Response)=>{
-    res.send("<p>Esdras Silva</p>")
-})
+App.use(json());
+App.use(routes);
+
+
+
 
 App.listen(3030,()=>{
-    console.log("Servidor iniciado");
+    db.sync()
+    console.log("Servidor iniciado em http://localhost:3030");
     
 })
